@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Main</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./assets/plugin/fontawesome/all.min.css"
+    />
+    <script src="./assets/plugin/fontawesome/all.min.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./assets/plugin/bootstrap-5.1.3-dist/css/bootstrap.css"
+    />
+    <link rel="stylesheet" href="./assets/css/root.css" />
+  </head>
+  <style>
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--main-color);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #2e2e2e;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #000000;
+    }
+
+    :root {
+      --main-color: rgb(21, 21, 21);
+      --main2-color: rgb(11, 54, 118);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
+    }
+
+    body {
+      overflow-x: hidden;
+      background: var(--main-color);
+      min-height: 100vh;
+      gap: 150px;
+      transition: height 0s;
+      position: relative;
+      /* padding-top: 55px; */
+      color: white;
+      padding-bottom: 50px;
+    }
+
+    header {
+      width: 100%;
+      height: 55px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 5;
+      /*  overflow: hidden; */
+      background: #00000000;
+      user-select: none;
+    }
+
+    main {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: column;
+      flex: 1 0 auto;
+      gap: 40px;
+    }
+    section {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    h1 {
+      overflow-y: hidden;
+      padding: 10px;
+    }
+    a {
+      color: white;
+      text-decoration: none;
+    }
+    a:hover {
+      color: rgb(124, 124, 124);
+    }
+    .banner {
+      width: 100%;
+      height: 60vh;
+      background: url(https://images.unsplash.com/photo-1698939316001-a536d4e301fe?q=80&w=1331&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+
+      /* height: 100vh;
+      background: url("./assets/image/__himesaka_noa_hoshino_hinata_hoshino_miyako_and_shirosaki_hana_watashi_ni_tenshi_ga_maiorita_drawn_by_mushiro_nijie728995__1857365cffdeaabaef57258d4ac94430.gif");
+ */
+
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-attachment: scroll;
+    }
+  </style>
+
+  <style>
+    .time-countdown {
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1px solid black;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .time-countdown span {
+      border-radius: 10px;
+    }
+    .type-1 span {
+      background: #222222;
+      height: 100%;
+      padding: 5px 10px;
+      min-width: 3em;
+      text-align: right;
+    }
+
+    .time-title {
+      font-size: 2rem;
+      background: #155dc8;
+      height: 100%;
+      padding: 5px 10px;
+      min-width: 3em;
+      text-align: right;
+      border-radius: 10px;
+    }
+    .type-2 span {
+      height: 100%;
+      padding: 5px 10px;
+      text-align: right;
+      min-width: 1em;
+    }
+    .type-3 span {
+      font-size: 4rem;
+    }
+    .type-3 {
+      max-width: 450px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      border: 1px solid rgba(255, 255, 255, 0.748);
+      background: #34343433;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(5px);
+      padding: 10px 40px;
+      overflow: hidden;
+    }
+    .type-3 .section-time {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .type-3 #seconds {
+      font-size: 1.5rem;
+      align-self: flex-end;
+    }
+    .type-3 .section-date {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 1.2rem;
+    }
+
+    video {
+      position: absolute;
+    }
+    iframe {
+      position: absolute;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    .main {
+      width: 80%;
+      max-width: 1400px;
+      min-width: 300px;
+      height: auto;
+      transform: translateY(-80px);
+      background: rgb(21, 21, 21);
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: column;
+      padding: 30px;
+      padding-top: 110px;
+      border-radius: 10px;
+      gap: 20px !important;
+      overflow-x: scroll;
+    }
+
+    .main h1 {
+      margin: 0px;
+    }
+
+    .timeline-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .timeline {
+      width: 900px;
+      height: 120px;
+      padding: 10px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      position: relative;
+      overflow-x: scroll;
+    }
+    .date-dot {
+      width: 10px;
+      height: 10px;
+      background: rgb(43, 43, 43);
+      position: absolute;
+      border-radius: 2px;
+      transition: 0.05s;
+    }
+    .hl-green {
+      background: var(--green4);
+    }
+
+    label {
+      font-size: 0.8rem;
+      opacity: 30%;
+      margin: 10px 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .hl-rainbow {
+      background: rgb(43, 43, 43);
+      transition: 0.05s;
+    }
+
+    .music {
+      width: 100%;
+      min-height: 20vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .music-wave {
+      width: 100%;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .music-wave-item {
+      width: 5px;
+      height: 100%;
+      background: #fff;
+      border-radius: 5px;
+    }
+
+    .music-wave-item:nth-child(odd) {
+      animation: musicMotionOdd 1s 0s infinite both;
+    }
+
+    .music-wave-item:nth-child(even) {
+      animation: musicMotionEven 1s 0s infinite both;
+    }
+
+    @keyframes musicMotionEven {
+      0% {
+        height: 50%;
+      }
+      50% {
+        height: 100%;
+      }
+      100% {
+        height: 50%;
+      }
+    }
+
+    @keyframes musicMotionOdd {
+      0% {
+        height: 100%;
+      }
+      50% {
+        height: 50%;
+      }
+      100% {
+        height: 100%;
+      }
+    }
+
+    @keyframes rainbowAnimation {
+      0% {
+        background: red;
+      }
+      14% {
+        background: orange;
+      }
+      28% {
+        background: yellow;
+      }
+      42% {
+        background: green;
+      }
+      57% {
+        background: blue;
+      }
+      71% {
+        background: violet;
+      }
+      85% {
+        background: purple;
+      }
+      100% {
+        background: pink;
+      }
+    }
+
+    .music-list {
+      width: 60%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0px;
+    }
+
+    .music-item-number {
+      min-width: 30px;
+    }
+    .music-list-item {
+      width: 100%;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 10px;
+      background: #2c2c2c;
+      border-radius: 5px;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .music-list-item:hover {
+      background: #212121;
+    }
+
+    .music-item-image {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .music-item-image img {
+      width: 100%;
+      height: 100%;
+    }
+    .music-item-name {
+      width: 100%;
+      padding: 0px 10px;
+      font-size: 0.8rem;
+    }
+
+    .music-item-control {
+      width: 60px;
+      font-size: 0.8rem;
+    }
+
+    .blog {
+      width: 80%;
+      height: auto;
+      min-width: 300px;
+      min-height: 40vh;
+      /* transform: translateY(-80px); */
+      background: rgb(21, 21, 21);
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: column;
+      padding: 30px;
+      border-radius: 10px;
+      gap: 10px;
+      overflow: visible;
+    }
+
+    .blog-header {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+      padding-top: 30px;
+    }
+    .blog-header h1 {
+      padding: 10px 0px;
+    }
+
+    .blog-content h3 {
+      padding: 10px 0px;
+      padding-left: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-left: 5px solid rgb(255, 255, 255);
+    }
+
+    .blog-detail {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .blog-item {
+      width: 300px;
+      height: 100px;
+      background: #1f1f1f;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: all ease-in-out 0.5s;
+      cursor: pointer;
+      opacity: 40%;
+    }
+    .blog-content {
+      overflow: visible;
+    }
+    .blog-content-image {
+      width: 100%;
+      min-width: 250px;
+      max-width: 100%;
+      margin: 20px 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      border-radius: 5px;
+    }
+
+    .blog-content-image img {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .blog-content-image img:nth-child(1) {
+      width: 100%;
+      height: 100%;
+    }
+
+    .blog-content-image img:not(:nth-child(1)) {
+      width: 33.333%;
+      height: 100%;
+      max-height: 200px;
+    }
+
+    .blog-content-video {
+      width: 100%;
+      min-width: 250px;
+      max-width: 100%;
+      height: 500px;
+      margin: 20px 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+      position: relative;
+    }
+
+    .blog-content-video video {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .blog-image-description {
+      width: 100%;
+      padding: 10px 0px;
+      opacity: 50%;
+    }
+
+    .blog-tags {
+      width: 100%;
+      padding: 10px 0px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .blog-tag-item {
+      padding: 10px;
+      border-radius: 10px;
+      background: #000;
+      cursor: pointer;
+    }
+
+    .blog-tag-item:hover {
+      background: #575757;
+    }
+
+    .blog-code {
+      position: relative;
+      width: 100%;
+      margin: 50px 0px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .blog-code pre {
+      width: 100%;
+      max-height: 300px;
+      overflow: auto;
+      padding: 50px 20px;
+      background: #282828;
+      border-radius: 5px;
+      color: var(--yellow2);
+    }
+    .blog-code-lang {
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .blog-code-control {
+      position: absolute;
+      top: 5px;
+      right: 0px;
+      padding: 10px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .blog-code-copy {
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: 1px solid white;
+    }
+    .blog-code-copy:hover {
+      background: #434343;
+    }
+
+    table {
+      width: 100%;
+      margin: 50px 0px;
+    }
+    td,
+    th {
+      border: 1px solid rgb(95, 95, 95);
+      padding-left: 10px;
+    }
+
+    td:has(img) {
+      width: clamp(100px, 100px, 100px);
+      text-align: center;
+      padding: 10px;
+    }
+    /* ul , ol{
+      margin: 20px 0px;
+    }
+ */
+    li {
+      overflow-x: hidden;
+    }
+  </style>
+
+  <body>
+    <main>
+      <section class="banner">
+        <section class="time-countdown type-3">
+          <div class="section-time">
+            <span id="hours"></span> : <span id="minutes"></span>
+            <span id="seconds"></span>
+          </div>
+          <div class="section-date">
+            <div id="day"></div>
+            <div id="date"></div>
+            <div id="month"></div>
+            <div id="year"></div>
+          </div>
+        </section>
+      </section>
+
+      
+      <section class="main">
+           <!--  Section  -->
+      
+      <div class="timeline-header">
+        <h1>Timeline</h1>
+        <label class="timeline-detail">Loading...</label>
+      </div>
+
+      <div class="timeline">
+        <div id="timeline-dot"></div>
+      </div>
+
+      <section class="timeline d-flex flex-column" style="gap: 15px">
+        <div id="timeline-hours-dot"></div>
+        <div id="timeline-minutes-dot"></div>
+        <div id="timeline-seconds-dot"></div>
+      </section>
+
+      <!--  Section  -->
+
+      <section class="music">
+        <div class="music-wave">
+          <div class="music-wave-item"></div>
+          <div class="music-wave-item"></div>
+          <div class="music-wave-item"></div>
+        </div>
+        <div class="music-label">
+          <label class=""> Playing...</label>
+        </div>
+
+        <ul class="music-list">
+          <li class="w-100 text-center">No Content Found</li>
+        </ul>
+      </section>
+      
+        <section class="blog">
+          <div class="blog-header">
+            <h1>Blogs</h1>
+            <label class="blog-detail">
+              <span>Author : Captz</span>
+              <span>Date : 14/11/2023</span>
+              <div class="blog-tags">
+                <div class="blog-tag-item">#Science</div>
+                <div class="blog-tag-item">#Science</div>
+                <div class="blog-tag-item">#Science</div>
+              </div>
+            </label>
+            <hr width="100%" />
+          </div>
+
+          <div class="blog-content">
+            <a href="http://127.0.0.1:5501/BrowserExtention/index.html#topic0">
+              <h3 id="topic0">Topic Code</h3>
+            </a>
+            <div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
+              obcaecati ea minus asperiores voluptatem, aspernatur aut at
+              necessitatibus officia corporis officiis mollitia natus, cumque
+              accusantium laboriosam debitis sed consectetur tempore?
+            </div>
+
+            <div class="blog-code">
+              <div class="blog-code-control">
+                <div class="blog-code-copy">Copy</div>
+              </div>
+              <pre>
+                async function renderDateDote(elem, year) {
+                    let today = new Date();
+                    let daysRange = 365;
+                    let startDate = removeDays(new Date(), Math.floor(daysRange / 2));
+                    let i = 1;
+                
+                    x = typeof x === "undefined" ? 0 : x;
+                    y = typeof y === "undefined" ? 0 : y;
+                    year = typeof year === "undefined" ? startDate.getFullYear() : year;
+                    let gap = 15;
+                    console.log(startDate);
+                
+                    while (i <= daysRange) {
+                      let fulldate = addDays(
+                        new Date(
+                          startDate.getFullYear(),
+                          startDate.getMonth(),
+                          startDate.getDate()
+                        ),
+                        i
+                      );
+                      let [d, m, y] = [
+                        fulldate.getDate(),
+                        fulldate.getMonth() + 1,
+                        fulldate.getFullYear(),
+                      ];
+                      let hl = "";
+                      if (fulldate < today) {
+                        hl = "hl-green";
+                      }
+                      await wait(2);
+                      $(elem)[0]?.insertAdjacentHTML(
+                        "afterbegin",
+                        `<div class="date-dot ${hl}" style="left:${x * gap}px; top:${
+                          ((i - 1) % 7) * gap
+                        }px" data-date="${d}" data-month="${m}" data-year="${y}"  ></div>`
+                      );
+                      x += i % 7 == 0 ? 1 : 0;
+                      i++;
+                    }
+                    return { x: x, y: y };
+                  }
+                </pre>
+
+            <a href="http://127.0.0.1:5501/BrowserExtention/index.html#topic1"
+              ><h3 id="topic1">Topic 1</h3></a
+            >
+            <div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Repudiandae explicabo, tempora praesentium ex nam dolor veritatis
+              beatae ducimus eveniet inventore illum iusto temporibus, quae est
+              accusantium nobis reiciendis, vel porro? Ipsa velit nihil
+              obcaecati? Officiis, repellendus consequuntur veniam laboriosam
+              dolores praesentium fugit dicta ratione deserunt, esse sint rem
+              impedit sequi. Veniam pariatur hic et cumque fuga possimus
+              laboriosam omnis nesciunt!
+            </div>
+            <div class="blog-content-image">
+              <img
+                src="https://images.unsplash.com/photo-1502784444187-359ac186c5bb?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+              />
+              <img
+                src="https://images.unsplash.com/photo-1502784444187-359ac186c5bb?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+              />
+              <img
+                src="https://images.unsplash.com/photo-1502784444187-359ac186c5bb?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+              />
+              <img
+                src="https://images.unsplash.com/photo-1502784444187-359ac186c5bb?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt=""
+              />
+
+              <label class="blog-image-description">This is image </label>
+            </div>
+
+            <a href="http://127.0.0.1:5501/BrowserExtention/index.html#topic2"
+              ><h3 id="topic2">Topic 2</h3></a
+            >
+
+            <div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+              blanditiis maiores ducimus aperiam voluptatum commodi quo pariatur
+              odit sunt soluta, placeat, numquam nesciunt temporibus accusamus
+              dolore ratione sit vero dolorum.
+            </div>
+            <div class="blog-content-video">
+              <iframe
+                src="https://www.youtube.com/embed/AkM-BgOpEhM?si=ocj39EgjiLN8KTqx"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+
+            <a href="http://127.0.0.1:5501/BrowserExtention/index.html#topic3"
+              ><h3 id="topic3">Topic 3</h3></a
+            >
+
+            <div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+              blanditiis maiores ducimus aperiam voluptatum commodi quo pariatur
+              odit sunt soluta, placeat, numquam nesciunt temporibus accusamus
+              dolore ratione sit vero dolorum.
+            </div>
+            <div class="blog-content-video">
+              <video
+                src="./assets/video/163059 (Original).mp4"
+                autoplay
+                loop
+              ></video>
+            </div>
+            <a
+              href="http://127.0.0.1:5501/BrowserExtention/index.html#topic-table"
+            >
+              <h3 id="topic-table">Topic Table</h3>
+            </a>
+            <div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
+              obcaecati ea minus asperiores voluptatem, aspernatur aut at
+              necessitatibus officia corporis officiis mollitia natus, cumque
+              accusantium laboriosam debitis sed consectetur tempore?
+            </div>
+            <table>
+              <thead>
+                <th>#</th>
+                <th>image</th>
+                <th>Name</th>
+                <th>Tel</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>
+                    <img
+                      src="https://images.unsplash.com/photo-1502784444187-359ac186c5bb?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt=""
+                    />
+                  </td>
+                  <td>Captain</td>
+                  <td>098-0746601</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>
+                    <img
+                      src="https://images.unsplash.com/photo-1502784444187-359ac186c5bb?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt=""
+                    />
+                  </td>
+                  <td>Captain</td>
+                  <td>098-0746601</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>
+                    <img
+                      src="https://images.unsplash.com/photo-1502784444187-359ac186c5bb?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt=""
+                    />
+                  </td>
+                  <td>Captain</td>
+                  <td>098-0746601</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <hr width="100px" />
+      </section>
+
+   
+    </main>
+  </body>
+  <script src="./assets/plugin/jquery/jquery-3.6.0.min.js"></script>
+  <script src="./assets/js/timecounter.js"></script>
+  <script src="./assets/js/music.js"></script>
+
+  <script src="./assets/js/timedot.js"></script>
+
+  <script>
+    function main() {
+      timeCounter();
+      timeDot();
+    }
+
+    main();
+  </script>
+</html>
